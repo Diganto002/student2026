@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Registration System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Hero / Landing -->
+  <header class="hero">
+    <nav class="nav">
+      <div class="brand">
+        <span class="brand-mark">SR</span>
+        <span class="brand-name">Student Registration</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#register">Register</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+    <div class="hero-content">
+      <span class="badge">Admissions Open 2026</span>
+      <h1>Register as a <span class="accent">Student</span> in Minutes</h1>
+      <p>Fill out the form below to enroll. We validate everything on the spot so you can fix mistakes before submitting.</p>
+      <a class="btn btn-primary" href="#register">Start Registration</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Registration Section -->
+    <section id="register" class="section register-section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Student Registration Form</h2>
+          <p>Please provide accurate details. All fields marked with <span class="req">*</span> are required.</p>
+        </div>
+
+        <div class="card form-card">
+          <form id="registrationForm" novalidate>
+            <div class="form-grid">
+              <!-- First Name -->
+              <div class="field">
+                <label for="firstName">First Name <span class="req">*</span></label>
+                <input type="text" id="firstName" name="firstName" placeholder="e.g. John" autocomplete="given-name" />
+                <small class="error" id="firstNameError"></small>
+              </div>
+
+              <!-- Last Name -->
+              <div class="field">
+                <label for="lastName">Last Name <span class="req">*</span></label>
+                <input type="text" id="lastName" name="lastName" placeholder="e.g. Doe" autocomplete="family-name" />
+                <small class="error" id="lastNameError"></small>
+              </div>
+
+              <!-- Email -->
+              <div class="field">
+                <label for="email">Email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" placeholder="e.g. john@example.com" autocomplete="email" />
+                <small class="error" id="emailError"></small>
+              </div>
+
+              <!-- Phone -->
+              <div class="field">
+                <label for="phone">Phone Number <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="11-digit number" inputmode="numeric" autocomplete="tel" />
+                <small class="error" id="phoneError"></small>
+              </div>
+
+              <!-- Date of Birth -->
+              <div class="field">
+                <label for="dob">Date of Birth <span class="req">*</span></label>
+                <input type="date" id="dob" name="dob" />
+                <small class="error" id="dobError"></small>
+              </div>
+
+              <!-- Gender -->
+              <div class="field">
+                <label for="gender">Gender <span class="req">*</span></label>
+                <select id="gender" name="gender">
+                  <option value="">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+                <small class="error" id="genderError"></small>
+              </div>
+
+              <!-- Course Name -->
+              <div class="field field-full">
+                <label for="course">Course Name <span class="req">*</span></label>
+                <input type="text" id="course" name="course" placeholder="e.g. B.Sc. in Computer Science" />
+                <small class="error" id="courseError"></small>
+              </div>
+
+              <!-- Address -->
+              <div class="field field-full">
+                <label for="address">Address <span class="req">*</span></label>
+                <textarea id="address" name="address" rows="3" placeholder="Street, City, Country"></textarea>
+                <small class="error" id="addressError"></small>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="reset" class="btn btn-ghost" id="resetBtn">Reset</button>
+              <button type="submit" class="btn btn-primary" id="submitBtn">Submit Registration</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <div class="about-card">
+          <h3>About this portal</h3>
+          <p>This student registration portal collects and validates student details on the client side before submission, ensuring data accuracy and a smooth enrollment experience.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Student Registration System. All rights reserved.</p>
+  </footer>
+
+  <!-- Response Modal -->
+  <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <div class="modal-icon success" id="modalIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h3 id="modalTitle">Registration Successful!</h3>
+      <p id="modalMessage">Your details have been submitted successfully.</p>
+      <div class="response-card" id="responseCard"></div>
+      <button class="btn btn-primary modal-btn" id="modalOk">Done</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
