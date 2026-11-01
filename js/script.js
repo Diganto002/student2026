@@ -27,7 +27,6 @@
     address: document.getElementById("addressError"),
   };
 
-  // ---------- Validators ----------
   const nameRegex = /^[A-Za-z ]{2,50}$/;
 
   function validateName(value) {
@@ -35,7 +34,6 @@
     if (!v) return "Name is required.";
     if (v.length < 2 || v.length > 50) return "Name must be 2-50 characters.";
     if (!nameRegex.test(v)) return "Name can contain only letters and spaces.";
-    // avoid leading/trailing or double spaces being "valid" content-wise; allow single spaces inside
     if (/\s{2,}/.test(v) || v.startsWith(" ") || v.endsWith(" ")) {
       return "Name cannot have leading/trailing or multiple spaces.";
     }
@@ -45,7 +43,6 @@
   function validateEmail(value) {
     const v = value.trim();
     if (!v) return "Email is required.";
-    // RFC-ish simple email regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(v)) return "Please enter a valid email address.";
     return "";
@@ -63,11 +60,9 @@
     const dob = new Date(value);
     if (isNaN(dob.getTime())) return "Please enter a valid date.";
     const today = new Date();
-    // normalize to midnight
     today.setHours(0, 0, 0, 0);
     dob.setHours(0, 0, 0, 0);
     if (dob > today) return "Date of birth cannot be in the future.";
-    // age calculation
     let age = today.getFullYear() - dob.getFullYear();
     const m = today.getMonth() - dob.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
@@ -105,7 +100,6 @@
     address: validateAddress,
   };
 
-  // ---------- UI helpers ----------
   function setError(key, message) {
     const fieldEl = fields[key].closest(".field");
     if (message) {
@@ -132,32 +126,26 @@
     return ok;
   }
 
-  // Live validation on blur; clear on input
   Object.keys(fields).forEach((key) => {
     const el = fields[key];
     el.addEventListener("blur", () => validateField(key));
     el.addEventListener("input", () => {
-      // only clear error if currently invalid? keep simple: re-validate silently-ish
       if (el.closest(".field").classList.contains("error")) {
         validateField(key);
       }
     });
   });
 
-  // Phone: restrict to digits only
   fields.phone.addEventListener("input", () => {
     fields.phone.value = fields.phone.value.replace(/\D/g, "").slice(0, 11);
   });
 
-  // Name: strip invalid chars as typing (optional gentle)
   ["firstName", "lastName"].forEach((k) => {
     fields[k].addEventListener("input", () => {
-      // allow letters and spaces only
       fields[k].value = fields[k].value.replace(/[^A-Za-z ]/g, "");
     });
   });
 
-  // ---------- Modal ----------
   const modalOverlay = document.getElementById("modalOverlay");
   const modalClose = document.getElementById("modalClose");
   const modalOk = document.getElementById("modalOk");
@@ -222,11 +210,9 @@
     return age;
   }
 
-  // ---------- Submit ----------
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!validateAll()) {
-      // focus first invalid
       const firstInvalid = Object.keys(fields).find((k) =>
         fields[k].closest(".field").classList.contains("error")
       );
@@ -246,9 +232,7 @@
     };
     data.age = calcAge(data.dob);
 
-    // Simulate submission success
     openModal(data);
-    // Optionally reset form after showing? Keep data; reset on close? We'll reset on Done.
   });
 
   modalOk.addEventListener("click", () => {
@@ -256,7 +240,6 @@
     Object.keys(fields).forEach((k) => setError(k, ""));
   }, { once: false });
 
-  // Reset button clears errors
   resetBtn.addEventListener("click", () => {
     setTimeout(() => Object.keys(fields).forEach((k) => setError(k, "")), 0);
   });
